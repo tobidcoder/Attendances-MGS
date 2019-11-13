@@ -232,5 +232,31 @@ public function getNumAbsent(){
     }
 
     }
+    public function checkIfstaffHaveDay(){
+        $db = new Database;
+    $conn =$db->connect();
+    $staff_id=$_SESSION['staff_id']; 
+    $day =  date("l");
+    // $date = date("Y-m-d");
+    try{
+        $sql="SELECT * FROM permission 
+        WHERE staff_id=:staff_id
+        AND status='halfday'
+        AND recurring_day=:day";
+        $stmt=$conn->prepare($sql);
+        $stmt->bindParam(':staff_id', $staff_id, PDO::PARAM_STR);
+        $stmt->bindParam(':day', $day, PDO::PARAM_STR);
+        // $stmt->bindParam(':staff_id', $staff_id, PDO::PARAM_STR);
+        $stmt->execute();
+        
+       if($stmt->rowCount() > 0){
+            return true;
+        }else{
+            return false;
+    }   
+    }catch(PDOExeption $e){
+        echo  $e->getMessage();
+    }
+    }
 }
 ?>

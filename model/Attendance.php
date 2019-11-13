@@ -8,18 +8,19 @@ class Attendance{
     public $clock_out;
     public $work_status;
     public $comment;
-//Methods for staff to clock in
-public function clockin($staff_id, $clockin_date, $day, $clock_in, $comment){
+//Methods for staff to clock in Half Day
+public function clockinHalfDay($staff_id, $clockin_date, $day, $clock_in, $clockin_status, $comment){
     $db = new Database;
     $conn =$db->connect();
     try{
-        $sql ="INSERT INTO attendance(staff_id, clockin_date, day, clock_in, comment) VALUES(:staff_id, :clockin_date, :day, :clock_in, :comment)";
+        $sql ="INSERT INTO attendance(staff_id, clockin_date, day, clock_in, clockin_status, comment) VALUES(:staff_id, :clockin_date, :day, :clock_in, :clockin_status, :comment)";
         $stmt=$conn->prepare($sql);
         //BINDING THE PARAMENTER
         $stmt->bindParam(':staff_id', $staff_id, PDO::PARAM_STR);
         $stmt->bindParam(':clockin_date', $clockin_date, PDO::PARAM_STR);
         $stmt->bindParam(':day', $day, PDO::PARAM_STR);
         $stmt->bindParam(':clock_in', $clock_in, PDO::PARAM_STR);
+        $stmt->bindParam(':clockin_status', $clockin_status, PDO::PARAM_STR);
         $stmt->bindParam(':comment', $comment, PDO::PARAM_STR);
         $result = $stmt->execute() or die(print_r($stmt->errorInfo(), true));
             if($result != ''){
@@ -30,6 +31,28 @@ public function clockin($staff_id, $clockin_date, $day, $clock_in, $comment){
     }
 }
 
+//Methods for staff to clock in Full Day
+public function clockinFullDay($staff_id, $clockin_date, $day, $clock_in, $clockin_status, $comment){
+    $db = new Database;
+    $conn =$db->connect();
+    try{
+        $sql ="INSERT INTO attendance(staff_id, clockin_date, day, clock_in, clockin_status, comment) VALUES(:staff_id, :clockin_date, :day, :clock_in, :clockin_status, :comment)";
+        $stmt=$conn->prepare($sql);
+        //BINDING THE PARAMENTER
+        $stmt->bindParam(':staff_id', $staff_id, PDO::PARAM_STR);
+        $stmt->bindParam(':clockin_date', $clockin_date, PDO::PARAM_STR);
+        $stmt->bindParam(':day', $day, PDO::PARAM_STR);
+        $stmt->bindParam(':clock_in', $clock_in, PDO::PARAM_STR);
+        $stmt->bindParam(':clockin_status', $clockin_status, PDO::PARAM_STR);
+        $stmt->bindParam(':comment', $comment, PDO::PARAM_STR);
+        $result = $stmt->execute() or die(print_r($stmt->errorInfo(), true));
+            if($result != ''){
+                return $result;
+            }
+    }catch(PDOExeption $e){
+        $e->getMessage();
+    }
+}
 //Methods for staff clock out
 public function clockOut($clockin_out){
     $db = new Database;

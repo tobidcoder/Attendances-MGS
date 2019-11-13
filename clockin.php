@@ -1,33 +1,28 @@
 <?php 
     session_start();
-    include_once ('include/autoload.php');
+    unset($_SESSION['admin_id']);
+    unset($_SESSION['admin_username']);
+    unset($_SESSION['admin_firstname']);
+    unset($_SESSION['admin_lastname']);
+    unset($_SESSION['admin_email'] );
+    if(!isset($_SESSION["staff_id"])) {  
+        header("location: login.php");
+    }
+   include_once ('include/autoload.php');
         $attendances = new Attendance;
+        $permission = new Permission;
+        // $settings = new Settings;
+        // $resumptiontime =$settings->getResumption()
+        // foreach ($resumptiontime as $resumtime){
+        //     $openingtime = $resumtime['resumption_time'];
+        //     echo $openingtime;
+        // }
      $resum = new Settings;
     $viewresum = $resum->getResumption();
     foreach ($viewresum as $view){
         $resumptime = $view['resumption_time'];
        }
-    //     //$staff_id, $clockin_date, $day, $clock_in, $comment
-    //     if(isset($_POST['clockin'])){
-
-    //         $staff_id = $_SESSION['staff_id'];
-    //         $date = date("Y-m-d");
-    //         $clockin_date = date('Y-m-d', strtotime($date));
-    //         $day =  date("l");
-    //         $clock_in = date("H:i:s");
-    //         $comment = $_POST['comment'];
-    //         $allreadyclockin = $attendances->checkIfClockIn();  
-    //          if($allreadyclockin){
-    //             $message_error_clockin ='You have already clocked in today, Pleased click go to dashboard. Thanks';    
-    //         } else  {
-    //             $result = $attendances->clockin($staff_id, $clockin_date, $day, $clock_in, $comment);
-    //              if($result) {      
-    //             header("location: dashboard.php");
-    //                }
-    //     }
-    // }
-
-
+    
     if (isset($_POST['clockin'])) {
         $staff_id = $_SESSION['staff_id'];
         $date = date("Y-m-d");
@@ -35,22 +30,49 @@
         $day =  date("l");
         $clock_in = date("H:i:s");
         $comment = $_POST['comment'];
+        $clockin_status='Punctual';
+        //check if staff have halfday
+            if ($permission->checkIfstaffHaveDay()){
+                if ($staff_id == "") {
+                    $message_error_clockin = 'You are not alow to clocked in!';
+                }else if ($date == "") {
+                    $message_error_clockin= 'Today is not working date!';
+                
+                } else if ($day == "") {
+                    $message_error_clockin = 'Today is not working day!';
+                }  else {
+                    //CLOCK IN Half day
+                    $result = $attendances->clockinHalfDay($staff_id, $clockin_date, $day, $clock_in, $clockin_status, $comment);
+                    //ECHO SUCCESSFUL MEASSGE 
+                    // if($result) {      
+                        header("location: dashboard.php");
+                    //  }
+                }
+                
+            }else{
 
-        if ($staff_id == "") {
-            $message_error_clockin = 'You are not alow to clocked in!';
-        }else if ($date == "") {
-            $message_error_clockin= 'Today is not working date!';
-        } else if ($day == "") {
-            $message_error_clockin = 'Today is not working day!';
-        } else if ($attendances->checkIfClockIn($clockin_date)) {
-            $message_error_clockin = 'You have already clocked in today, Pleased click go to dashboard. Thanks';    
-        } else {
-            $result = $attendances->clockin($staff_id, $clockin_date, $day, $clock_in, $comment);
-            //ECHO SUCCESSFUL MEASSGE 
-            // if($result) {      
-                header("location: dashboard.php");
-            //  }
-        }
+                if(strtotime($clock_in) <= strtotime($resumptime)){
+                    $clockin_status= 'Punctual';  
+                }else{
+                    $clockin_status='Late';
+                }
+
+                if ($staff_id == "") {
+                    $message_error_clockin = 'You are not alow to clocked in!';
+                } else if ($date == "") {
+                    $message_error_clockin= 'Today is not working date!';
+                } else if ($day == "") {
+                    $message_error_clockin = 'Today is not working day!';
+                } else {
+                    //Clock in full day
+                    $result = $attendances->clockinFullDay($staff_id, $clockin_date, $day, $clock_in, $clockin_status, $comment);
+                    //ECHO SUCCESSFUL MEASSGE 
+                    // if($result) {      
+                        header("location: dashboard.php");
+                    //  }
+                }
+            
+            }
     }
     
 ?>
