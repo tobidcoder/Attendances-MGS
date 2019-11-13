@@ -23,7 +23,7 @@
                 $_SESSION['lastname'] = $stafflogin->lastname;
                 $_SESSION['email'] = $stafflogin->email;
                 $_SESSION['username'] =$stafflogin->username;
-                header("location: clockin.php");
+                header("location: dashboard.php");
             }else{
                 $login_error_message = 'The details you enter is not correct!';
             }

@@ -86,7 +86,7 @@ public function getClockinTime(){
     $date = date("Y-m-d");
     $clockin_date = date('Y-m-d', strtotime($date));
     try{
-        $sql="SELECT * FROM attendance WHERE staff_id=:staff_id AND clockin_date=:clockin_date";
+        $sql="SELECT * FROM attendance WHERE staff_id=:staff_id AND clockin_date=:clockin_date ORDER BY created_at LIMIT 1";
         $stmt=$conn->prepare($sql);
         $stmt->bindParam(':staff_id', $staff_id, PDO::PARAM_STR);
         $stmt->bindParam(':clockin_date', $clockin_date, PDO::PARAM_STR);
@@ -152,7 +152,7 @@ public function getClockinTodayNumber(){
     $date = date("Y-m-d");
     $clockin_date = date('Y-m-d', strtotime($date));
     try{
-        $sql="SELECT * FROM attendance WHERE clockin_date=:clockin_date";
+        $sql="SELECT * FROM attendance WHERE clockin_date=:clockin_date ORDER BY created_at LIMIT 1";
         $stmt=$conn->prepare($sql);
         $stmt->bindParam(':clockin_date', $clockin_date, PDO::PARAM_STR);
         $stmt->execute();
@@ -191,7 +191,7 @@ public function getAllClockedinToday(){
 try{
     $sql="SELECT * FROM attendance
      INNER JOIN staff ON attendance.staff_id=staff.staff_id 
-     WHERE attendance.clockin_date=:clockin_date";
+     WHERE attendance.clockin_date=:clockin_date ORDER BY attendance.staff_id LIMIT 1";
     $stmt=$conn->prepare($sql);
     $stmt->bindParam(':clockin_date', $clockin_date, PDO::PARAM_STR);
     $stmt->execute();
@@ -218,7 +218,7 @@ try{
     $sql="SELECT * FROM attendance
      INNER JOIN staff ON attendance.staff_id=staff.staff_id 
      WHERE WEEKOFYEAR(attendance.clockin_date)=:thisweek AND attendance.staff_id=:staff_id
-     AND YEAR(attendance.clockin_date) =:thisyear";
+     AND YEAR(attendance.clockin_date) =:thisyear ORDER BY created_at LIMIT 1";
     $stmt=$conn->prepare($sql);
     $stmt->bindParam(':thisweek', $thisweek, PDO::PARAM_STR);
     $stmt->bindParam(':staff_id', $staff_id, PDO::PARAM_STR);

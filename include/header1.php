@@ -272,13 +272,51 @@ if(!isset($_SESSION["admin_id"])) {
                                     <h3>
                                         <span class="badge badge-primary"><span id='date' ></span>  </span>
                                     </h3>
-                               
-                                <h3>
-                                    <span class="badge badge-primary"><?php echo $_SESSION['admin_firstname']; ?></span>
-                                </h3>
-                                <h3>
-                            <a href="logout.php"><span class="badge badge-primary">Logout</span> </a>
-                             </h3>
+                                    <div class="account-item account-item--style2 clearfix js-item-menu">
+                                <div class="image">
+                                    <img src="../include/images/icon/avatar-01.jpg" alt="Staff" />
+                                </div>
+                                <div class="content">
+                                    <a class="js-acc-btn" href="#"><?php echo $_SESSION['admin_username']?></a>
+                                </div>
+                                <div class="account-dropdown js-dropdown">
+                                    <div class="info clearfix">
+                                        <div class="image">
+                                            <a href="#">
+                                                <img src="../include/images/icon/avatar-01.jpg" alt="John Doe" />
+                                            </a>
+                                        </div>
+                                        <div class="content">
+                                            <h5 class="name">
+                                                <a href="editprofile.php"><?php echo $_SESSION['admin_firstname'],   $_SESSION['admin_lastname']; ?></a>
+                                            </h5>
+                                            <span class="email"><?php echo $_SESSION['admin_email']; ?></span>
+                                        </div>
+                                    </div>
+                                    <div class="account-dropdown__body">
+                                        <div class="account-dropdown__item">
+                                            <a href="editprofile.php">
+                                                <i class="zmdi zmdi-account"></i>Edit Profile</a>
+                                        </div>
+                                        <div class="account-dropdown__item">
+                                            <a href="changepassword.php">
+                                                <i class="zmdi zmdi-settings"></i>Change Password</a>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="account-dropdown__footer">
+                                        <a href="logout.php">
+                                            <i class="zmdi zmdi-power"></i>Logout</a>
+                                    </div>
+                                </div>
+                            <!-- </div>
+                        </div> -->
+                    <!-- </div>
+                </div>
+            </div> -->
+        
+
+            
                            </div>
                         </div>
                     </div>

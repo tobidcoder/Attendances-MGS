@@ -44,7 +44,9 @@
                                 <th>Clock in Time</th>
                                 <th>Clock Out Time</th>
                                 <th>Comment</th>
+                                
                                 <th>Clocked in Status</th>
+                                <th>Change Status</th>
                                 
                             </tr>
                         </thead>
@@ -62,6 +64,7 @@
                                 <td><?php echo $view['clock_out']; ?></td>
                                 <td><?php echo $view['comment']; ?></td>
                                 <td><?php echo $view['clockin_status']; ?></td>
+                                <td><a href="editabsent.php?absent=<?php echo $view['id']; ?>"><button type="button" class="btn btn-success mb-1" data-toggle="modal" data-target="#editpermission">Change </button></a>
                              </tr>
                            
                         </tbody>

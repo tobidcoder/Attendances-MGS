@@ -40,7 +40,7 @@ if(!isset($_SESSION["staff_id"])) {
 <link href="include/vendor/slick/slick.css" rel="stylesheet" media="all">
 <link href="include/vendor/select2/select2.min.css" rel="stylesheet" media="all">
 <link href="include/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <!-- Main CSS-->
 <link href="include/css/theme.css" rel="stylesheet" media="all">
 
@@ -206,15 +206,54 @@ if(!isset($_SESSION["staff_id"])) {
                             <h3>
                                 <span class="badge badge-primary"><span id='date' ></span>  </span>
                             </h3>
-                        
-                        <h3>
-                            <span class="badge badge-primary">Staff 1</span>
-                        </h3>
-                        <h3>
-                            <a href="logout.php"><span class="badge badge-primary">Logout</span> </a>
-                        </h3>
-                    </div>
+                                                        
+                            <div class="account-item account-item--style2 clearfix js-item-menu">
+                                <div class="image">
+                                    <img src="include/images/icon/avatar-01.jpg" alt="Staff" />
+                                </div>
+                                <div class="content">
+                                    <a class="js-acc-btn" href="#"><?php echo $_SESSION['username']; ?></a>
+                                </div>
+                                <div class="account-dropdown js-dropdown">
+                                    <div class="info clearfix">
+                                        <div class="image">
+                                            <a href="#">
+                                                <img src="include/images/icon/avatar-01.jpg" alt="John Doe" />
+                                            </a>
+                                        </div>
+                                        <div class="content">
+                                            <h5 class="name">
+                                                <a href="editprofile.php"><?php echo $_SESSION['firstname'],   $_SESSION['lastname']; ?></a>
+                                            </h5>
+                                            <span class="email"><?php echo $_SESSION['email']; ?></span>
+                                        </div>
+                                    </div>
+                                    <div class="account-dropdown__body">
+                                        <div class="account-dropdown__item">
+                                            <a href="editprofile.php">
+                                                <i class="zmdi zmdi-account"></i>Edit Profile</a>
+                                        </div>
+                                        <div class="account-dropdown__item">
+                                            <a href="changepassword.php">
+                                                <i class="zmdi zmdi-settings"></i>Change Password</a>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="account-dropdown__footer">
+                                        <a href="logout.php">
+                                            <i class="zmdi zmdi-power"></i>Logout</a>
+                                    </div>
+                                </div>
+                            <!-- </div>
+                        </div> -->
+                    <!-- </div>
+                </div>
+            </div> -->
+        
+
+            </div>
                 </div>
             </div>
+
         </header>
         <!-- HEADER DESKTOP-->
