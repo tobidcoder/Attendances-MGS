@@ -146,6 +146,8 @@ public function deleteAbsent($id){
         $e->getMessage();
     }
     }
+
+    //Delete half day
     public function deleteHalfday($id){
         $db =new Database;
         $conn =$db->connect();

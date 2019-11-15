@@ -1,39 +1,52 @@
 <?php 
     include_once ('../include/autoload.php');
     include ('../include/header1.php');
-//     $holiday= new Holidays();
-//     if(isset($_POST['holiday'])){
-//         $holiday_date = $_POST['holiday_date'];
-//         $holiday_description = $_POST['holiday_description'];
-//         if($holiday_date ==""){
-//             $holiday_error_meassage ='Pleased select holiday date. Thanks';
-//         }elseif($holiday_description == ""){
-//             $holiday_error_meassage =' pleased enter holiday occation. Thanks';
-//         }else{
-//             $result = $holiday->setHolidays($holiday_date, $holiday_description);
-//             if($result){
-//             $holiday_success_meassage ='Great new holiday have been set successful';
-//         }
-//     }
-// }
- 
+    $holiday=new Holidays;
+    if(isset($_GET['holiday'])){
+        $id =($_GET['holiday']);
+        $deleteholiday=$holiday->deleteHoliday($id);
+        $holiday_delete_succesful = 'holiday deleted successful. Thanks';
+       
+       //  header("location: viewallhalfday.php");
+       }
 
-    $holiday = new Holidays;
+    // $holiday = new Holidays;
+    if(isset($_POST['editholidays'])){
+            $id = isset($_GET['edit']);
+            $id =($_GET['edit']);
+            
+        $date = $_POST['holiday_date'];;
+        $holiday_date = date('Y-m-d', strtotime($date));
+        $holiday_description = trim( $_POST['holiday_description']);
+        if($holiday_date ==""){
+            $holiday_error_meassage ='Pleased enter Holiday date';
+        }elseif($holiday_description == ""){
+            $holiday_error_meassage ='Pleased eneter holiday description';
+        }else{
+            $result = $holiday->editHolidays($id,$holiday_date, $holiday_description);
+            if($result){
+                $holiday_success_meassage ='Holiday edited sucessful, Thanks';
+               
+            }
+        }
     
+
+    }
+    //Create Holiday 
     if(isset($_POST['holidays'])){
 
         $date = $_POST['holiday_date'];;
         $holiday_date = date('Y-m-d', strtotime($date));
         $holiday_description = trim( $_POST['holiday_description']);
         if($holiday_date ==""){
-            $holiday_error_meassage ='Pleased enter resumption time';
+            $holiday_error_meassage ='Pleased enter Holiday date';
         }elseif($holiday_description == ""){
-            $holiday_error_meassage ='Pleased eneter closing time';
+            $holiday_error_meassage ='Pleased eneter Holiday description';
         }else{
             $result = $holiday->setHolidays($holiday_date, $holiday_description);
             if($result){
-                $holiday_success_meassage ='Resumption and closing time save successful, Thanks';
-                echo $date ;
+                $holiday_success_meassage ='Holiday have save sucessful, Thanks';
+               
             }
         }
     
@@ -71,28 +84,60 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>';
-        ?>             
-    <form action="" method="POST">   
-             <div class="row form-group">
-               <div class="col-6">
-                <div class="col col-md-3">
-                    <label for="text-input" class="form-control-label">Date</label>
-                    </div>
-                <input type="date" name="holiday_date" class="form-control">
-                </div>
-            </div>
-                <div class="row form-group">
-                     <div class="col-6">
-                     <div class="col col-md-3">
-                    <label for="text-input" class=" form-control-label">Occation</label>
-                    </div>
-                    <input type="text" name="holiday_description" placeholder="Independent day" class="form-control">
-                    </div>
-                </div>
-               <input type="submit" class="btn btn-success" name="holidays" value="Set Holiday">
-                    <!-- <i class="fa fa-star"></i>&nbsp;Set Holiday                                                            --> 
+         
+        if(isset($_GET['edit'])){
+             $getviewholiday =$holiday->getHolidaysone($id);
+             foreach ($getviewholiday as $view){
+                 $date1=$view['holiday_date'];
+                 $descrption = $view['holiday_description'];
             
-         </form>
+            echo '<form action="" method="POST">   
+                    <div class="row form-group">
+                    <div class="col-6">
+                    <div class="col col-md-3">
+                        <label for="text-input" class="form-control-label">Date</label>
+                        </div>
+                    <input type="date" name="holiday_date" Value="<?php echo $date1 ?>" class="form-control">
+                    </div>
+                </div>
+                    <div class="row form-group">
+                            <div class="col-6">
+                            <div class="col col-md-3">
+                        <label for="text-input" class=" form-control-label">Occation</label>
+                        </div>
+                        <input type="text" name="holiday_description" placeholder="Independent day" value=""  class="form-control">
+                        </div>
+                    </div>
+                    <input type="submit" class="btn btn-success" name="editholidays" value="Edit Holiday">
+                        <!-- <i class="fa fa-star"></i>&nbsp;Set Holiday  --> 
+                
+            </form>';
+             }
+            } else{
+                    echo '<form action="" method="POST">   
+                    <div class="row form-group">
+                    <div class="col-6">
+                    <div class="col col-md-3">
+                        <label for="text-input" class="form-control-label">Date</label>
+                        </div>
+                    <input type="date" name="holiday_date" class="form-control">
+                    </div>
+                </div>
+                    <div class="row form-group">
+                            <div class="col-6">
+                            <div class="col col-md-3">
+                        <label for="text-input" class=" form-control-label">Occation</label>
+                        </div>
+                        <input type="text" name="holiday_description" placeholder="Independent day" class="form-control">
+                        </div>
+                    </div>
+                    <input type="submit" class="btn btn-success" name="holidays" value="Set Holiday">
+                        <!-- <i class="fa fa-star"></i>&nbsp;Set Holiday                                                            --> 
+                
+                </form>';
+            }         
+    
+         ?> 
          <br>
         <h5>This Month Holiday</h5>
          <!-- DATA TABLE-->
@@ -119,14 +164,14 @@
             <td><?php echo $view['id'] ?></td>
             <td><?php echo $view['holiday_date'] ?></td>
             <td><?php echo $view['holiday_description'] ?></td>
-            <td><button type="button" class="btn btn-primary mb-1" data-toggle="modal" data-target="#editholiday">Edit</button>
-                <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#deleteholiday">Delete</button>
+            <td><a href="setholiday.php?edit=<?php echo $view['id']; ?>"><button type="button" class="btn btn-success mb-1" name="edit">Edit</button> </a>
+            <a href="javascript:delete_haliday(<?php echo $view['id']; ?>)"> <button type="button" class="btn btn-danger mb-1 ">Delete</button> </a></td>
           </tr>
                 
             </tbody>
             <?php } ?>
     </table>
-    <nav aria-label="Page navigation example">
+    <!-- <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-end">
         <li class="page-item disabled">
         <a class="page-link" href="#" tabindex="-1">Previous</a>
@@ -138,7 +183,7 @@
         <a class="page-link" href="#">Next</a>
         </li>
     </ul>
-    </nav>
+    </nav> -->
         </div>
         <!-- END DATA TABLE-->
 

@@ -2,6 +2,20 @@
 <?php 
     include_once ('../include/autoload.php');
     include ('../include/header1.php');
+    $attendances = new Attendance;
+    if(isset($_POST['updatestatus'])){
+        $id=$_POST['updateid'];
+        $clockin_status = $_POST['clockin_status'];
+        if ($id == "") {
+            $changestatus_error = 'You did not select any result!';
+        } else if ($clockin_status == "") {
+            $changestatus_error= 'Pleased select a status!';
+        } else {
+            //Change clockin status
+            $change = $attendances->cHangeClockinStatus($id, $clockin_status);
+          
+        }
+    }
 ?>
    
            <!-- MAIN CONTENT-->
@@ -98,6 +112,11 @@
                        
                         
     <!-- DATA TABLE-->
+    <style>
+        td.hidden,th.hidden {
+        display:none;
+        }
+        </style>
     <div class="table-responsive m-b-40">
         <h4>Clock in staff Today</h4>
         <br>
@@ -108,6 +127,7 @@
         
             <thead style="background-color: #000080;">
                 <tr>
+                     <th class="hidden" scope="col">Hidden id</th>
                     <th>#</th>
                     <th>Date</th>
                     <th>First Name</th>
@@ -115,31 +135,36 @@
                     <th>Clock in Time</th>
                     <th>Clock Out Time</th>
                     <th>Clockin Status</th>
+                    <th>Change status</th>
                 </tr>
             </thead>
             <?php 
+
+                $counter = 1; 
                 $attentoday =new Attendance();
                 $viewatten = $attentoday->getAllClockedinToday();
                 foreach($viewatten  as $view){
-                   
-               
             ?>
             <tbody>
                 <tr>
-                    <td>1</td>
-                    <td><?php echo $view['clockin_date'] ?></td>
+                    <td class="hidden"><?php echo $view['id'] ?></td>
+                    <td><?php echo $counter; ?></td>
+                    <td><?php echo $view['day'],
+                    "<br \>", $view['clockin_date'] ?></td>
                     <td><?php echo $view['firstname'] ?></td>
                     <td><?php echo $view['lastname'] ?></td>
                     <td><?php echo $view['clock_in'] ?></td>
                     <td><?php echo $view['clock_out'] ?></td>
                     <td><?php echo $view['clockin_status'] ?></td>
+                    <td> <a href="#" class="btn btn-success editbtn"> EDIT </a></td>  
                 </tr>
                 
               
             </tbody>
-        <?php  } ?>
+        <?php  $counter++;
+             }?>
         </table>
-        <nav aria-label="Page navigation example">
+        <!-- <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-end">
             <li class="page-item disabled">
             <a class="page-link" href="#" tabindex="-1">Previous</a>
@@ -151,11 +176,10 @@
             <a class="page-link" href="#">Next</a>
             </li>
         </ul>
-        </nav>
+        </nav> -->
     </div>
     <!-- END DATA TABLE-->   
     
- <!--My Charts-->
-    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
-
+   
+    
 <?php include ('../include/footer1.php') ?>

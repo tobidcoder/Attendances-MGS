@@ -11,28 +11,7 @@
                 </div>
                 <div class="modal-body">           
                 <form action="" method="post" class="">   
-                    <div class="row form-group">
-                <div class=" col-md-3">
-                        <label for="select" class=" form-control-label">Set date</label>
-                    </div>
                     
-                    <div class="col-6 col-md-3"> 
-                        <div class="col-6 col-md-9">
-                                <label for="text-input" class=" form-control-label">Start Date:</label>
-                                </div>
-                            <input type="date" placeholder="pick-start-date" class="form-control">
-                        </div> 
-                        <div class="col-6 col-md-3"> 
-                        <div class="col-6 col-md-8">
-                                <label for="text-input" class=" form-control-label">End Date:</label>
-                                </div>
-                            <input type="date" placeholder="pick-end-date" class="form-control">
-                        </div>       
-                    </div>
-                    <div class="row form-group">
-                    <div class="col col-md-3">
-                        <label for="select" class=" form-control-label">Select Day:</label>
-                    </div>
                     <div class="col-12 col-md-9">
                         <select name="select" id="select" class="form-control">
                             <option value="">Every</option>

@@ -43,13 +43,15 @@
                       </tr>
                 </thead>
                 <?php 
+                    $count =1;
                     $staff =new Staff();
                     $viewstaff = $staff->getAllStaff();
                     foreach($viewstaff as $view){
+                        
                 ?>
                 <tbody>
                 <tr>
-                    <td>1</td>
+                    <td><?php echo $count ?></td>
                     <td><?php echo $view['firstname']; ?></td>
                     <td><?php echo $view['lastname']; ?></td>
                     <td><?php echo $view['email']; ?></td>
@@ -57,7 +59,7 @@
                         <!-- <button type="button"  class="btn btn-success mb-1" data-toggle="modal" data-target="#viewpermission">View Permission</button>    </tr> -->
                           
                          </tbody>
-                    <?php } ?>
+                    <?php $count++; } ?>
                     </table>
                 <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-end">

@@ -63,6 +63,7 @@
                 </tr>
         </thead>
         <?php 
+            $counter = 1;
              $permission =new Permission();
              $viewpermission= $permission->getAllStaffHalfday();
                 foreach($viewpermission as $view){
@@ -71,11 +72,7 @@
         <tbody>
         
         <tr>
-            <td>
-            <span class="custom-checkbox">
-                <input type="checkbox" id="checkbox1" name="options[]" value="1">
-                <label for="checkbox1"></label>
-            </span>
+            <td><?php echo $counter; ?>          
             </td>
             <td><?php echo $view['start_date']; ?></td>
             <td><?php echo $view['end_date']; ?></td>
@@ -87,10 +84,10 @@
         </tr>
         </tbody>
        
-                <?php } ?>          
+                <?php $counter++; } ?>          
          
             </table>
-        <nav aria-label="Page navigation example">
+        <!-- <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-end">
             <li class="page-item disabled">
             <a class="page-link" href="#" tabindex="-1">Previous</a>
@@ -102,15 +99,14 @@
             <a class="page-link" href="#">Next</a>
             </li>
         </ul>
-        </nav>
+        </nav> -->
    
         </div>
         <!-- END DATA TABLE-->     
 
 
         <?php include ('../include/footer1.php') ?>
-        <?php include ('../include/modal/edithalfday.php') ?>
-        <?php include ('../include/modal/deletehalfday.php') ?>
+       
 
   
 

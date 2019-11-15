@@ -23,10 +23,31 @@
         $register_error_message = 'Username is already in use!';
     } else {
         $staff_id = $staff->staffRegister($_POST['firstname'], $_POST['lastname'], $_POST['username'], $_POST['email'],  $_POST['password']);
-        //ECHO SUCCESSFUL MEASSGE 
-        $register_success_message = 'New staff created sucessfull';
+
+      // /sending staff details through mail
+            $to = "tunelood@gmail.com"; // this is your Email address
+            $from = $_POST['email']; // this is the staff Email address
+            $first_name = $_POST['firstname'];
+            $last_name = $_POST['lastname'];
+            $username= $_POST['username'];
+            $Email = $_POST['email'];
+            $Password = $_POST['password'];
+          
+            $subject = "Welcome to office, This is your login details";
+            $message = " This is your details:" ."\n\n Name:" . $first_name . " " . $last_name . 
+                        "\n\n Username:" .  $username . 
+                        "\n\n Email:" .  $Email .
+                        "\n\n Password:" .  $Password .
+                        "Pleased login with with" .$username. "or" . $Email . "And" . $Password. ".Thanks";
+        
+        
+            $headers = "From:" . $to;
+            mail($from,$subject,$message, $headers); // sends a copy of the message to staff       
+            //ECHO SUCCESSFUL MEASSGE 
+            $register_success_message = '';
+            $register_success_message = "New staff created sucessfull, and Login details have sent to. $first_name .  Thank you.";
+        }
     }
-}
 ?>
          <!-- MAIN CONTENT-->
             <div class="main-content">

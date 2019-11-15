@@ -20,7 +20,7 @@ if (isset($_POST['clockin'])) {
     $date = date("Y-m-d");
     $clockin_date = date('Y-m-d', strtotime($date));
     $day =  date("l");
-    $clock_in = date("H:i:s");
+    $clock_in = date("H:i:s:a");
     $comment = $_POST['comment'];
     $clockin_status='Punctual';
     //check if staff have halfday
@@ -44,13 +44,15 @@ if (isset($_POST['clockin'])) {
             }
             
         }else{
-
-            if(strtotime($clock_in) <= strtotime($resumptime)){
-                $clockin_status= 'Punctual';  
+            $clock_in = date("H:i:s:a"); 
+            if($clock_in >= $resumptime){
+                $clockin_status= 'Late';  
             }else{
-                $clockin_status='Late';
-            }
-
+                $clockin_status= 'Punctual';
+                }
+           
+           
+            $clock_in = date("H:i:s:a"); 
             if ($staff_id == "") {
                 $message_clock_error = 'You are not alow to clocked in!';
             } else if ($date == "") {
@@ -61,7 +63,7 @@ if (isset($_POST['clockin'])) {
                 //Clock in full day
                 $result = $attendances->clockinFullDay($staff_id, $clockin_date, $day, $clock_in, $clockin_status, $comment);
                 //ECHO SUCCESSFUL MEASSGE
-                $_SESSION['clockin'] = $clock_in; 
+                // $_SESSION['clockin'] = $clock_in; 
                 // if($result) {      
                     // header("location: dashboard.php");
                 //  }
@@ -76,7 +78,7 @@ if (isset($_POST['clockin'])) {
         
         $result = $attendances->clockOut($clock_out);
         if($result) {   
-            $message_clock_success = 'You have succesful clock out. <a href="logout.php">  Click Here to Logout </a>'; 
+            $message_clock_success = 'You have succesful clock out. Thanks'; 
             unset($_SESSION['clockin']);
             // header("location: logout.php");
         }
@@ -122,6 +124,7 @@ if (isset($_POST['clockin'])) {
                         </button>
                     </div>';
                     }
+                     
                     if(isset($$message_clock_error) and $$message_clock_error != ""){
                         echo '<div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
                         <span class="badge badge-pill badge-danger">danger  <br></span> '
@@ -131,14 +134,24 @@ if (isset($_POST['clockin'])) {
                     </div>
                     <br>';
                     }
-
-                if(isset($_SESSION['clockin'])){
-                    //<!-- Clock Out form  -->
+                    
+                    // $clockedme = $attendances->clokinButton();
+                    //     foreach ($clockedme as $clock){
+                    //         $clock_out = $clock['clock_out'];
+                    //         // $clock_in = $clock['id'];
+                    //         // echo $clock_in;
+                    //         echo $clock_out;
+                    //         echo $clock_out;
+                    //         echo $clock_out;
+                    //     }
+                    //     echo $clock_out;
+                if( $attendances->clokinButton()){
+                     //<!-- Clock Out form  -->
                         echo '<form action="" method="post">  
                         <button type="submit" class="btn btn-danger btn-block" name="clockout">
                             <h1 style="color: white; align-content: center;"><i class="fa fa-clock"></i>&nbsp;Clock Out</h1> </button>
                         </form>';
-                }else{
+               }else{
                     //Clock in Form
                     echo '<form action="" method="post">
                     <div class="row form-group">
@@ -156,7 +169,7 @@ if (isset($_POST['clockin'])) {
                     </form>';
 
                 }
-
+            
             ?>
             
            <br>
@@ -168,9 +181,13 @@ if (isset($_POST['clockin'])) {
             <div class="row">
                 <div class="col-md-3 col-lg-3">
                     <div class="statistic__item statistic__item--blue">
+                        <?php 
+                            $count3 = $attendances->getPunctualNumofstaff();
+                        ?>
+                        <h2 class="number"><?php echo $count3 ?> Days</h2>
                         <h3>Punctual</h3>
-                        <h2 class="number">0 Days</h2>
-                        <span class="desc">Out of 22 days</span>
+                       
+                        <span class="desc">This Month</span>
                         
                     </div>
                 </div>
@@ -178,32 +195,38 @@ if (isset($_POST['clockin'])) {
                 
                 <div class="col-md-6 col-lg-3">
                     <div class="statistic__item statistic__item--orange">
+                         <?php 
+                            $count4 = $attendances->getLateNumofstaff();
+                        ?>
+                        <h2 class="number"><?php echo $count4 ?> Days</h2>
                         <h3>Late</h3>
-                        <h2 class="number">0 Days</h2>
-                        <span class="desc">Out of 22 days</span>
+                        
+                        <span class="desc">This Month</span>
                         
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-3">
                     <div class="statistic__item statistic__item--green">
-                        <h3>HalfDay</h3>
-                        <?php $permission = new Permission;
-                            $count2=$permission->getNumberofhalfDay();
-                        ?>
-                        <h2 class="number"><?php echo $count2 ?> days</h2>
-                        <span class="desc">Out of 22 days</span>
+                    <?php $permission = new Permission;
+                        $count2=$permission->getNumberofhalfDay();
+                    ?>
+                    <h2 class="number"><?php echo $count2 ?> Day</h2>
+                    <h5>Permission to Resume Late</h5>
+                       
+                        <span class="desc">For this month</span>
                         
                     </div>
                 </div>
                 
                 <div class="col-md-6 col-lg-3">
                     <div class="statistic__item statistic__item--red">
-                        <h4>Absent with Permission.</h4>
-                        <?php $permission = new Permission;
+                         <?php $permission = new Permission;
                             $count1 = $permission->getNumberofAbsent();
                         ?>
-                        <h2 class="number"><?php echo $count1 ?> Days</h2>
-                        <span class="desc">Out of 22 days</span>
+                        <h2 class="number"><?php echo $count1 ?> Day</h2>
+                        <h4>Absent with Permission.</h4>
+                       
+                        <span class="desc">For this month</span>
                         
                     </div>
                 </div>

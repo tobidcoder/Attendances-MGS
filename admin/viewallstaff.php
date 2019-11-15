@@ -51,14 +51,15 @@
                         
                     </tr>
                 </thead>
-        <?php 
+        <?php
+            $counter = 1;
             $staff =new Staff();
             $viewstaff = $staff->getAllStaff();
             foreach($viewstaff as $view){
         ?>
                 <tbody>
                     <tr>
-                        <td><?php echo $view['staff_id']; ?></td>
+                        <td><?php echo $counter ?></td>
                         <td><?php echo $view['firstname']; ?></td>
                         <td><?php echo $view['lastname']; ?></td>
                         <td><?php echo $view['email']; ?></td>
@@ -72,7 +73,9 @@
                         
                  </tbody>
 
-                 <?php } ?>   
+                 <?php 
+                    $counter++;
+                    } ?>   
             </table>
             <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-end">

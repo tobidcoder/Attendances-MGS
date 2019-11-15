@@ -84,6 +84,7 @@
                     </tr>
                 </thead>
                <?php 
+                    $counter= 1;
                 if(isset($_POST['getreport'])){
                     $date1 = $_POST['from_date'];
                     $from_date = date('Y-m-d', strtotime($date1));
@@ -102,8 +103,9 @@
                 ?>
                 <tbody>
                     <tr>
-                        <td>1</td>
-                        <td><?php echo $view['clockin_date']; ?></td>
+                        <td><?php echo $counter; ?></td>
+                        <td><?php echo $view['day'],
+                         "<br \>", $view['clockin_date'] ?></td>
                         <td><?php echo $view['clock_in']; ?></td>
                         <td><?php echo $view['clock_out']; ?></td>
                         <td><?php echo $view['comment']; ?></td>
@@ -115,15 +117,15 @@
                 </tbody>
             <?php  
 
-                
+                $counter++;
                 }
                 }       
-
+                
                  }
 
                 ?>
             </table>
-            <nav aria-label="Page navigation example">
+            <!-- <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-end">
                     <li class="page-item disabled">
                     <a class="page-link" href="#" tabindex="-1">Previous</a>
@@ -135,7 +137,7 @@
                     <a class="page-link" href="#">Next</a>
                     </li>
                 </ul>
-            </nav>
+            </nav> -->
         </div>
     <!-- END DATA TABLE-->   
     

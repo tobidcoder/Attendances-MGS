@@ -66,6 +66,7 @@
                         </tr>
                 </thead>
                 <?php 
+                    $counter = 1;
                     $permission =new Permission();
                     $viewpermission= $permission->getAllStaffAbsent();
                         foreach($viewpermission as $view){
@@ -73,7 +74,7 @@
                 ?>
                 <tbody>
                 <tr>
-                    <td>1</td>
+                    <td><?php echo $counter; ?></td>
                     <td><?php echo $view['start_date']; ?></td>
                     <td><?php echo $view['end_date']; ?></td>
                     <td><?php echo $view['firstname']; ?></td>
@@ -85,9 +86,11 @@
                 </tr>
                     
                     </tbody>
-                        <?php } ?>
+                        <?php 
+                        $counter++;
+                        } ?>
                  </table>
-            <nav aria-label="Page navigation example">
+            <!-- <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-end">
                     <li class="page-item disabled">
                     <a class="page-link" href="#" tabindex="-1">Previous</a>
@@ -100,7 +103,7 @@
                     </li>
                 </ul>
             </nav>            
-    
+     -->
                 </div>
                 <!-- END DATA TABLE-->     
         

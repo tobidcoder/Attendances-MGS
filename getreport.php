@@ -71,7 +71,8 @@
                         </tr>
                     </thead>
                     <?php 
-                if(isset($_POST['getreport'])){
+                    $count = 1;
+                  if(isset($_POST['getreport'])){
                     $date1 = $_POST['from_date'];
                     $from_date = date('Y-m-d', strtotime($date1));
                     $date2 = $_POST['to_date'];
@@ -89,7 +90,7 @@
                 ?>
                 <tbody>
                     <tr>
-                        <td>1</td>
+                        <td><?php echo $count ?></td>
                         <td><?php echo $view['clockin_date']; ?></td>
                         <td><?php echo $view['clock_in']; ?></td>
                         <td><?php echo $view['clock_out']; ?></td>
@@ -99,7 +100,7 @@
                     
                     
                 </tbody>
-            <?php  
+            <?php $count++; 
                 }
              }       
 

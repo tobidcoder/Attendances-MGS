@@ -72,7 +72,7 @@ include_once ('../include/autoload.php');
                     <div class="login-content">
                         <div class="login-logo">
                             <a href="#">
-                                <img src="images/icon/logo.png" alt="Coralstone Capital">
+                                <img src="../include/images/logo.png" alt="Coralstone Capital">
                             </a>
                         </div>
                         <div class="login-form">
@@ -87,6 +87,7 @@ include_once ('../include/autoload.php');
                     }
                     ?>
                             <form action="" method="post">
+                            <h3 class="pb-2 didplay-5"> Admin Login </h3>
                                 <div class="form-group">
                                     <label>Username or Email</label>
                                     <input class="au-input au-input--full" type="username" name="username" placeholder="Enter username or Email">
@@ -95,13 +96,7 @@ include_once ('../include/autoload.php');
                                     <label>Password</label>
                                     <input class="au-input au-input--full" type="password" name="password" placeholder="Password">
                                 </div>
-                                <div class="login-checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember">Remember Me
-                                    </label>
-                                    
-                                </div>
-                               
+                                                              
                                 <input type="submit" class="btn btn-success" name="login" value="Login"> 
                             </form>
                             <div class="register-link">

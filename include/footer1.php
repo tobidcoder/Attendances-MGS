@@ -15,10 +15,44 @@
                      <small>Copyright &copy; 2019 Attendance MGS. All rights reserved.</small>
                    </div>
                  </footer>
-   
-                 <?php include ('../include/modal/editstaff.php') ?>
-                <?php include ('../include/modal/viewstaff.php') ?>
-                <?php include ('../include/modal/deletestaff.php') ?>
+   <!-- modal small -->
+   <div class="modal fade" id="editstatus" tabindex="-1" role="dialog" aria-labelledby="smallmodalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-sm" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="editstatus">Change Status</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+                        <form action="dashboard.php" method="post" >
+                            <input type="hidden" name="updateid" id="updateid"><br> 
+                                    <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label for="selectSm" class=" form-control-label" >Status</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <select name="clockin_status"  class="form-control-sm form-control" id="clockinstatus">
+                                            <option value="Late">Late  </option>
+                                            <option value="Punctual">Punctual </option>
+                                            <option value="Wave">Wave   </option>
+                                        </select>
+                                    </div>
+                                </div>
+                             <button type="submit" name="updatestatus" class="btn btn-primary">Save</button>
+                        </form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- end modal small -->
+
+                 
     <script src="../include/vendor/jquery-3.2.1.min.js"></script>
     <!-- Bootstrap JS-->
     <script src="../include/vendor/bootstrap-4.1/popper.min.js"></script>
@@ -80,26 +114,23 @@
     
         })(document);
 
-    // Get DATA TO MODAL
-    $(document).ready(function () {
-         $('.editstaffbtn').on('cick', function(){
-            $('#editstaff').modal('show');
+       
+   $(document).ready(function(){
+       $('.editbtn').on('click', function(){
+           $('#editstatus').modal('show');
+           $tr = $(this).closest('tr');
+           var data = $tr.children("td").map(function(){
+               return  $(this).text();
+           }).get()
+           console.log(data);
+           $('#updateid').val(data[0]);
+           $('#clockinstatus').val(data[7]);
+           });
+   });
 
-             $tr = $(this).closest('tr');
-             var data=$tr.children('td').map(function(){
-                 return $(this).text();
-              }).get();
-             console.log($data);
-                $('#staff_id').val(data[0]);
-                $('#firstname').val(data[1]);
-                $('#lastname').val(data[2]);
-                // $('#username').val(data[3]);
-                $('#email').val(data[4]);
-            
-        });
 
-     });
-    </script>
+ 
+</script>
 </body>
 
 </html>

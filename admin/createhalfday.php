@@ -34,11 +34,7 @@
             <table class="table table-borderless table-data3 staff-saerch">
         <thead style="background-color: #000080;">
             <tr>
-                <th><span class="custom-checkbox">
-								<input type="checkbox" id="selectAll">
-								<label for="selectAll"></label>
-							</span>
-                </th>
+                <th># </th>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Email</th>
@@ -48,14 +44,14 @@
         
         <tbody>
         <?php 
+            $count =1;
            $staff = new staff;
             $viewstaff = $staff->getAllStaff();
             foreach ($viewstaff as $view){
-                $count=1;
+              
         ?>
         <tr>
-            <td> <?php echo $view['staff_id'] ?>
-            </td>
+            <td> <?php echo $count ?> </td>
             <td><?php echo $view['firstname'] ?> </td>
             <td><?php echo $view['lastname'] ?></td>
             <td><?php echo $view['email'] ?></td>
@@ -63,11 +59,11 @@
             <!-- <a href="halfdaystaff.php?id=<?php echo $view['staff_id']; ?>"> <button type="button"  class="btn btn-success mb-1">View halfday</button> </a>  -->
                   </td>
         </tr>
-            <?php } ?>    
-         </tbody>
            
+         </tbody>
+         <?php $count++; } ?>    
             </table>
-            <nav aria-label="Page navigation example">
+            <!-- <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-end">
                 <li class="page-item disabled">
                 <a class="page-link" href="#" tabindex="-1">Previous</a>
@@ -79,7 +75,7 @@
                 <a class="page-link" href="#">Next</a>
                 </li>
             </ul>
-            </nav>
+            </nav> -->
 
         </div>
         <!-- END DATA TABLE-->  

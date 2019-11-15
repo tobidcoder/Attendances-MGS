@@ -43,32 +43,45 @@ if(!isset($_SESSION["admin_id"])) {
     <link href="../include/vendor/slick/slick.css" rel="stylesheet" media="all">
     <link href="../include/vendor/select2/select2.min.css" rel="stylesheet" media="all">
     <link href="../include/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>  
     <!-- Main CSS-->
     <link href="../include/css/theme.css" rel="stylesheet" media="all">
 
     <!--Script to display current time and date-->
     <script type="text/javascript"> 
-            function display_c(){
-            var refresh=1000; // Refresh rate in milli seconds
-            mytime=setTimeout('display_date()',refresh)
-            }      
-            // function display_date(){
-            //     var x = new Date()
-            //     var x1=x.toUTCString();
-            //     document.getElementById('date').innerHTML = x1;
-            //     tt=display_c();
-            // }
-            function display_date() {
-            var x = new Date()
-            var x1=x.getMonth() + 1+ "-" + x.getDate() + "-" + x.getFullYear(); 
-            x1 = x1 + " | " +  x.getHours( )+ ":" +  x.getMinutes();
-            document.getElementById('date').innerHTML = x1;
-            display_c();
+            function startTime() {
+            var today = new Date();
+            var h = today.getHours();
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+            m = checkTime(m);
+            s = checkTime(s);
+            document.getElementById('txt').innerHTML =
+            h + ":" + m ;
+            var t = setTimeout(startTime, 500);
             }
-
-        
-    
+            function checkTime(i) {
+            if (i < 10) {i = "0" + i};  
+            return i;
+            }
+    // Script to edit clockin status
+//     <script>
+//    $(document).ready(function(){
+//        $('.editbtn').on('click', function(){
+//            $('#editstatus').modal('show');
+//            $tr = $(this).closest('tr');
+//            var data = $tr.children("td").map(function(){
+//                return  $(this).text();
+//            }).get()
+//            console.log(data);
+//            $('#updateid').val(data[0]);
+//            $('#projectname').val(data[1]);
+//            $('#projectdes').val(data[2]);
+//            $('#projectduedate').val(data[4]);
+//            $('#projectstatus').val(data[5]);
+//        });
+//    });
+// </script>
         </script>
         
     <script type="text/javascript">
@@ -88,10 +101,17 @@ if(!isset($_SESSION["admin_id"])) {
             window.location.href='viewallhalfday.php?halfday='+$id;
             }
         }
+
+        function delete_haliday($id){
+            if(confirm('Are you sure you what to delete this Holiday?')){
+            window.location.href='setholiday.php?holiday='+$id;
+            }
+        }
     </script>    
 </head>
 
-<body class="animsition"  onload=display_date();>
+<body class="animsition" onload="startTime()">
+        
     <div class="page-wrapper">
         <!-- HEADER MOBILE-->
         <header class="header-mobile d-block d-lg-none">
@@ -269,10 +289,14 @@ if(!isset($_SESSION["admin_id"])) {
                                
                                 <!--Display Date and Time-->                         
                                 <!-- <h>Today: <span id='date' ></span>    </h6>  -->
-                                    <h3>
-                                        <span class="badge badge-primary"><span id='date' ></span>  </span>
-                                    </h3>
-                                    <div class="account-item account-item--style2 clearfix js-item-menu">
+                                <?php $today = date("D, M j, Y");
+                                $format = date("a");
+                                ?>
+
+                             <h3>
+                                <span class="badge badge-secondary"><?php echo $today ?> <br><span id="txt" ></span> <?php echo $format ?> </span>
+                            </h3>
+                                    <div class="account-item account-item--style3 clearfix js-item-menu">
                                 <div class="image">
                                     <img src="../include/images/icon/avatar-01.jpg" alt="Staff" />
                                 </div>
@@ -322,3 +346,6 @@ if(!isset($_SESSION["admin_id"])) {
                     </div>
                 </header>
                 <!-- HEADER DESKTOP-->
+
+                <!-- <div id="loader"></div>
+                <div style="display:none;" id="myDiv" class="animate-bottom"> -->

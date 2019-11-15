@@ -48,6 +48,7 @@
                     </tr>
                 </thead>
                 <?php 
+                        $count = 1;
                         $attendance = new Attendance;
                         $attenmonth=$attendance->getStaffthisMonthReport($staff_id);
                         foreach($attenmonth as $view){
@@ -55,7 +56,7 @@
                     ?>
                 <tbody>
                     <tr>
-                        <td>1</td>
+                        <td><?php echo $count; ?></td>
                         <td><?php echo $view['clockin_date']; ?></td>
                         <td><?php echo $view['clock_in']; ?></td>
                         <td><?php echo $view['clock_out']; ?></td>
@@ -63,7 +64,7 @@
                         <td><?php echo $view['clockin_status']; ?></td>
                      </tr>
                   </tbody>
-                <?php   } ?>
+                <?php  $count++;  } ?>
             </table>
         </div>
 <!-- END DATA TABLE-->   
